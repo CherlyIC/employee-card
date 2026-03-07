@@ -7,14 +7,25 @@ function App() {
   const filteredEmployees = employees.filter(employee => {
     return employee.name.toLowerCase().includes(search.toLowerCase()) || employee.email.toLowerCase().includes(search.toLowerCase())
   })
+
+
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
-      .then(data => {console.log(data); setEmployees(data)
+      .then(data => { setEmployees(data); setLoading(false)
 
       })
-      
+      .catch(err => { setError("please try again"); setLoading(false) })
   }, [])
+  if(loading) {
+        return <p className='text-center text-gray-500'>Loading...</p>
+      }
+      if(error) {
+        return <p className='text-center text-red-500'>{error}</p>
+      }
+
   return (
     <div className='min-h-screen bg-gray-100 p-8'>
       <h1 className='text-4xl font-extrabold text-center text-gray-800 mb-2'>Employee Directory</h1>
@@ -49,6 +60,11 @@ function App() {
       }
 
       </div>
+      {filteredEmployees.length === 0 && (
+        <p className='text-center text-gray-500 mt-8'>No employees found.</p>
+      )
+
+      }
       
       
     </div>
