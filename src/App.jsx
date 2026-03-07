@@ -17,15 +17,16 @@ function App() {
   return (
     <div>
       <h1>Employee Directory</h1>
-      <p>We have {employees.length} employees</p>
+      <p className="no-print">We have {employees.length} employees</p>
       <input
+        className="no-print"
         type="text"
         placeholder="Search by name or email"
         value={search}
         onChange={e => {console.log(e.target.value)  
           setSearch(e.target.value)}}
       />
-      <button onClick={() => window.print()}>Print all cards</button> 
+      <button  className="no-print" onClick={() => window.print()}>Print all cards</button> 
       {
         filteredEmployees.map(employee => (
             <EmployeeCard 
